@@ -1,0 +1,9 @@
+.db
+.env
+.idea
+.DS_Store
+node_modules
+npm-debug.log
+ecosystem.config.js
+serverConfig
+notes

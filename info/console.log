@@ -1,0 +1,85 @@
+bash$ npx hardhat console --network rinkeby
+Welcome to Node.js v12.19.0.
+Type ".help" for more information.
+>
+(To exit, press ^C again or ^D or type .exit)
+>
+bash$ npx hardhat run --network rinkeby scripts/deploy.js
+Deploying Box...
+Box deployed to: 0x58f667913A862B9e8BC675De2552026220D9cd52
+bash$ npx hardhat console --network rinkeby
+Welcome to Node.js v12.19.0.
+Type ".help" for more information.
+> const Box = await ethers.getContractFactory("Box")
+undefined
+> const box = await Box.attach("0x58f667913A862B9e8BC675De2552026220D9cd52")
+undefined
+> (await box.retrieve()).toString()
+'42'
+>
+(To exit, press ^C again or ^D or type .exit)
+>
+bash$ pwd
+/Users/kenyMobile/Desktop/hh
+bash$ npx hardhat run --network rinkeby scripts/transfer_ownership.js
+Transferring ownership of ProxyAdmin...
+Transferred ownership of ProxyAdmin to: 0xa238ed8775825141cE36F7232722F7bb4366cCD0
+bash$ npx hardhat test
+Compiling 1 file with 0.7.3
+Compilation finished successfully
+
+
+  Box (proxy)
+    ✓ retrieve returns a value previously initialized
+
+  Box
+    ✓ retrieve returns a value previously stored
+
+  BoxV2
+    ✓ retrieve returns a value previously stored
+    ✓ retrieve returns a value previously incremented
+
+  BoxV2 (proxy)
+    ✓ retrieve returns a value previously incremented
+
+
+  5 passing (943ms)
+
+bash$ 0xa238ed8775825141cE36F723
+-bash: 0xa238ed8775825141cE36F723: command not found
+bash$ npx hardhat run --network rinkeby scripts/prepare_upgrade.js
+Preparing upgrade...
+BoxV2 at: 0x77420C22d72A6877bf401eC38Fe11e17565edb62
+bash$ npx hardhat console --network rinkeby
+Welcome to Node.js v12.19.0.
+Type ".help" for more information.
+> const BoxV2 = await ethers.getContractFactory("BoxV2")
+undefined
+> const boxV2 = await BoxV2.attach("0x58f667913A862B9e8BC675De2552026220D9cd52")
+undefined
+> (await boxV2.retrieve()).toString()
+'42'
+> await boxV2.increment()
+{
+  hash: '0x803962e2d00b4041d673533a4ac5681323301d0ec8a3b3252d9c17d6a0ffb847',
+  blockHash: null,
+  blockNumber: null,
+  transactionIndex: null,
+  confirmations: 0,
+  from: '0xDA03AE1F9aD1A4c0A4146A9297f69b9979DdA9C8',
+  gasPrice: BigNumber { _hex: '0x3b9aca00', _isBigNumber: true },
+  gasLimit: BigNumber { _hex: '0x7c1a', _isBigNumber: true },
+  to: '0x58f667913A862B9e8BC675De2552026220D9cd52',
+  value: BigNumber { _hex: '0x00', _isBigNumber: true },
+  nonce: 8,
+  data: '0xd09de08a',
+  r: '0x2b3cf4489afff0c26ec8b111b2ebffbeb0ed67af4774606499580a7c49ebfa17',
+  s: '0x093eccf87ae2fb3dca29ce6a101181d19f51cbda4fc749449d865fc894628677',
+  v: 43,
+  creates: null,
+  chainId: 4,
+  wait: [Function]
+}
+> (await boxV2.retrieve()).toString()
+'43'
+>
